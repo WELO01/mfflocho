@@ -1,0 +1,15 @@
+{
+  "login": {
+    "title": "WELCOME - LOGIN",
+    "email_placeholder": "USERNAME OR PHONE",
+    "password_placeholder": "PASSWORD",
+    "button": "LOGIN",
+    "help_text": "Having trouble logging in?",
+    "help_link": "We can help you",
+    "error_invalid": "Invalid email or password",
+    "error_invalid_email_or_phone": "Enter a valid email or phone number",
+    "error_empty_password": "Password cannot be empty",
+    "loading": "Logging in...",
+    "success": "Login successful"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "register": {
+    "title": "Create Account",
+    "links": {
+      "home": "Home",
+      "shop": "Shop",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "button": {
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      
+      "register": "Register",
+      "submitted": "Submitted"
+    
+      
+    },
+   "messages": {
+    "success": "✅ Your account has been created successfully!",
+    "errorGeneric": "Something went wrong during registration. Please try again."
+  },
+    "actions": {
+      "login": "Sign in",
+      "logout": "Log out",
+      "submitting": "Submitting...",
+       "submit": "Submit",
+      "cart": "Your Cart"
+    },
+    "inputs": {
+      "username": "Username",
+      "email": "Email Address",
+      "password": "Password",
+      "phone": "Phone Number",
+      "confirmPassword": "Confirm Password",
+      "passwordMismatch": "Passwords do not match"
+      
+    }
+  }
+}

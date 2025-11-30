@@ -1,0 +1,1 @@
+en esta carpeta estan cosas que van en carpetas globlaeles como es el caso del thema.css es por si lo quieres importa a otro lugra sabees que este es como usar el thema puedes agregar los temas que quieras sigue assi pedro es dificil pero si hacemos todo bien millonarios casi casi disfruta del camino por dificl que se vea es la vida vivela no importa como venga.

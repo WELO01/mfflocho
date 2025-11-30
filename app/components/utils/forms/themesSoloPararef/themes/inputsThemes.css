@@ -1,0 +1,27 @@
+/* inputs-themes.css */
+
+
+@import "tailwindcss/utilities";
+
+/* input base (neutro) */
+@layer components {
+  .inputWB{
+    @apply rounded-xl px-4 py-3 outline-none transition border;
+  }
+
+  /* TEMA: black neon */
+  .theme-black-neon .inputWB {
+    @apply bg-transparent border-cyan-400/40 text-white shadow-[0_0_12px_rgba(0,255,255,0.12)];
+  }
+  .theme-black-neon .inputWB:focus {
+    @apply border-cyan-300 shadow-[0_0_20px_rgba(0,255,255,0.35)];
+  }
+
+  /* TEMA: red neon */
+  .theme-red-neon .inputWB{
+    @apply bg-transparent border-red-400/60 text-white shadow-[0_0_14px_rgba(248,113,113,0.3)];
+  }
+  .theme-red-neon .inputWB:focus {
+    @apply border-red-300 shadow-[0_0_20px_rgba(248,113,113,0.45)];
+  }
+}

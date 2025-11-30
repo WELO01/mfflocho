@@ -1,0 +1,11 @@
+
+
+
+{
+    "servicesSection":{
+  "OurServices": "Our Services",
+  "description": "We offer printing, design, and customization solutions to bring your ideas to life.",
+  "error": "An error occurred while loading the services. Please try again."
+    }
+}
+

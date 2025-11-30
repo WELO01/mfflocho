@@ -1,0 +1,9 @@
+{
+  "validator": {
+    "required": "This field is required",
+    "emailInvalid": "Invalid email address",
+    "phoneInvalid": "Invalid phone number",
+    "passwordWeak": "Must be at least 8 characters and include a number and an uppercase letter",
+    "nameInvalid": "Enter a valid name (letters only)"
+  }
+}

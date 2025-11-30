@@ -1,0 +1,28 @@
+{
+  "navbar": {
+    "links": {
+      "home": "Home",
+      "privacy":"Privacy Policies",
+      "shop": "Shop",
+      "about": "About",
+      "contact": "Contact",
+      "orders": "Orders",    
+    "products": "Products",
+    "categories": "Categories",
+    "offers": "Offers",
+    "search": "Search",
+    "cart": "Cart",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "welcome": "Welcome back!",
+    "logo_alt": "Flocho Logo",
+    "shippingAddress":" Shipping Address"
+    },
+    "actions": {
+      "login": "Sign in",
+      "logout": "Log out",
+      "cart": "Your Cart"
+    }
+  }
+}
