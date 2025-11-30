@@ -2,7 +2,7 @@ import { ReduxProvider } from "@/src/store/Reduxrpovider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script"; // 👈 Importa este módulo
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,17 +20,16 @@ export const metadata: Metadata = {
   description: "Crea y personaliza tus propios diseños",
 };
 
+const locale = "en";
+
 export default function RootLayout({
-  children,
-  params: { locale },
-}: Readonly<{
+  children
+}: {
   children: React.ReactNode;
-  params: { locale: string };
-}>) {
+}) {
   return (
-    <html lang={locale || "en"}>
+    <html lang={locale}>
       <head>
-        {/* ✅ Script de Google Maps para autocompletado */}
         <Script
           src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&libraries=places`}
           strategy="afterInteractive"
@@ -38,7 +37,7 @@ export default function RootLayout({
       </head>
 
       <body className={`${geistSans.variable} ${geistMono.variable} bg-black text-white`}>
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale}>
           <ReduxProvider>
             <main>{children}</main>
           </ReduxProvider>

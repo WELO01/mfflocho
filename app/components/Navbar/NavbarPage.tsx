@@ -3,6 +3,7 @@
 import { clearUserSession } from "@/app/login/slice";
 import { useAppSelector } from "@/src/store/hooks";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
+
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
