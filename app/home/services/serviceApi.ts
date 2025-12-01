@@ -14,7 +14,7 @@ export const ServiceApi = createApi({
   reducerPath: "ServiceApi",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"}/admin/services`,
+    baseUrl: `${process.env.NEXT_PUBLIC_FLOCHO_API }/admin/services`,
   }),
 
   tagTypes: ["Service"],

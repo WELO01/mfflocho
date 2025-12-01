@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001";
+const BACKEND = process.env.NEXT_PUBLIC_FLOCHO_API || "http://localhost:3001";
 
 function imgUrl(path?: string) {
   if (!path) return "";
@@ -15,6 +15,7 @@ function imgUrl(path?: string) {
 
 export default function ServicesSection() {
   const { data: services, isLoading, error } = useGetServicesQuery();
+  console.log(services)
   const t = useTranslations()
  
 
@@ -46,6 +47,7 @@ export default function ServicesSection() {
         {/* Skeletons mientras carga */}
         {isLoading &&
           Array.from({ length: 8 }).map((_, i) => (
+          
             <div
               key={`skeleton-${i}`}
               className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse"
@@ -61,6 +63,7 @@ export default function ServicesSection() {
         {/* Cards reales */}
         {services?.map((service) => {
           const cover = imgUrl(service.images?.[0]?.filePath);
+          console.log("url",cover)
           const thumbs = service.images?.slice(0, 3) || [];
           const extra = Math.max((service.images?.length || 0) - 3, 0);
 

@@ -18,7 +18,7 @@ interface RefreshResponse {
 
 // 👇 Solo dominio/puerto y opcionalmente /api, pero SIN /auth
 const baseUrl =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+  process.env.NEXT_PUBLIC_API_URL ?? process.env.URL_BACKEND_DEVELOPMENT;
 
 const rawBaseQuery = fetchBaseQuery({
   baseUrl,
