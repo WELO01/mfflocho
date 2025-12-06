@@ -1,8 +1,10 @@
 "use client";
 
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "@/src/store/basequery";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
-// 🎯 DTO: los únicos valores permitidos para crear una orden
+
+// 🎯 DTO: los datos necesarios
 export interface CreatePhotoPrintingOrderDto {
   title: string;
   unitPrice: number;
@@ -14,18 +16,17 @@ export interface CreatePhotoPrintingOrderDto {
   finishType?: string;
   colorProfile?: string;
   notes?: string;
-  images: File[]; // Archivos reales
+  images: File[];
 }
+
 export interface CreatePhotoOrderResponse {
   message: string;
-  order: string; // o number si lo cambias
+  order: string;
   clientSecret: string;
   amount: number;
 }
 
-
-
-// 🧩 Función auxiliar para convertir DTO → FormData
+// 🧩 Convertir DTO → FormData
 function buildPhotoOrderFormData(data: CreatePhotoPrintingOrderDto): FormData {
   const formData = new FormData();
   formData.append("title", data.title);
@@ -40,7 +41,6 @@ function buildPhotoOrderFormData(data: CreatePhotoPrintingOrderDto): FormData {
   if (data.colorProfile) formData.append("colorProfile", data.colorProfile);
   if (data.notes) formData.append("notes", data.notes);
 
-  // Solo se aceptan archivos del tipo File[]
   data.images.forEach((file) => {
     if (!(file instanceof File)) {
       throw new Error("❌ Invalid image file type.");
@@ -53,22 +53,20 @@ function buildPhotoOrderFormData(data: CreatePhotoPrintingOrderDto): FormData {
 
 export const PhotoPrintingApi = createApi({
   reducerPath: "PhotoPrintingApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl:
-      `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"}/orders/photoPrinting`,
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      if (token) headers.set("Authorization", `Bearer ${token}`);
-      return headers;
-    },
-  }),
+
+  // 🔥 Aquí usamos BASEQUERY REAUTH
+  baseQuery: baseQueryWithReauth,
+
   endpoints: (builder) => ({
-    // 🧾 Crear orden de impresión segura
-    createPhotoOrder: builder.mutation<CreatePhotoOrderResponse, CreatePhotoPrintingOrderDto>({
+    createPhotoOrder: builder.mutation<
+      CreatePhotoOrderResponse,
+      CreatePhotoPrintingOrderDto
+    >({
       query: (orderData) => {
         const formData = buildPhotoOrderFormData(orderData);
+
         return {
-          url: "",
+          url: "/orders/photoPrinting",
           method: "POST",
           body: formData,
         };

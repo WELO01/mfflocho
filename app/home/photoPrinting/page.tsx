@@ -33,6 +33,7 @@ export default function PhotoPrintingPage() {
     setSelectedSize(size.name);
     setTotal(size.price * images.length);
   };
+  
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-black via-cyan-950 to-black text-white px-4 sm:px-0">
@@ -98,7 +99,7 @@ export default function PhotoPrintingPage() {
           }}
         />
       </div>
-
+   
       {/* Modal de Pago */}
       {showPayment && clientSecret && amount && (
         <PaymentModal

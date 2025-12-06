@@ -60,15 +60,43 @@ export default function NavbarPage() {
 
             {/* Logo */}
             <Logo size={35} />
+            
+  
+         
+             <Link
+    href="/flocho-privacy"
+    className="hover:text-cyan-400 text-lg"
+    onClick={() => setMenuOpen(false)}
+  >
+    {t("links.privacy")}
+  </Link>
+           
 
             {/* Links condicionales */}
+
             {isLoggedIn ? (
+              <>
+               <Link
+      href="/cartOrders"
+      className="hover:text-cyan-400 text-lg"
+      onClick={() => setMenuOpen(false)}
+    >
+      {t("links.orders")}
+    </Link>
+               <Link
+      href="/shippingAddress"
+      className="hover:text-cyan-400 text-lg"
+      onClick={() => setMenuOpen(false)}
+    >
+      {t("links.shippingAddress")}
+    </Link>
               <button
-                onClick={handleLogout}
-                className="hover:text-cyan-400 text-lg"
+              onClick={handleLogout}
+              className="hover:text-cyan-400 text-lg"
               >
                 {t("links.logout")}
               </button>
+            </>
             ) : (
               <>
                 <Link
