@@ -1,8 +1,11 @@
 "use client";
 
 import { OrdersApi } from "@/app/cartOrders/CartOrders.api";
+import { MugOrderApi } from "@/app/home/mugs/mugsModelApi";
 import { PhotoPrintingApi } from "@/app/home/photoPrinting/photPrintingApi";
 import { ServiceApi } from "@/app/home/services/serviceApi";
+import { TumblerOrderApi } from "@/app/home/tumbler/thumblersModelApi";
+
 import { LoginApi } from "@/app/login/LoginApi";
 import { authSlice } from "@/app/login/slice";
 import { authApi } from "@/app/register/registerApi";
@@ -19,6 +22,8 @@ export const store = configureStore({
       [OrdersApi.reducerPath]: OrdersApi.reducer,
       [ShippingAddressApi.reducerPath]: ShippingAddressApi.reducer,
       [UserApi.reducerPath]: UserApi.reducer,
+      [MugOrderApi.reducerPath]: MugOrderApi.reducer,
+      [TumblerOrderApi.reducerPath]: TumblerOrderApi.reducer,
     auth: authSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -30,6 +35,9 @@ export const store = configureStore({
       OrdersApi.middleware,
       ShippingAddressApi.middleware,
       UserApi.middleware,
+      MugOrderApi.middleware,
+      TumblerOrderApi.middleware,
+
 
       
     ),

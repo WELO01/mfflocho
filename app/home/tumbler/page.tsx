@@ -4,26 +4,26 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import PaymentModal from "@/app/components/Payment/PaymentModal";
-import MugModelShowcase from "./MugModel";
+import TumblerModelShowcase from "./thumblerModel";
 import {
-  MugModel,
-  useCreateMugOrderMutation,
-  useGetMugModelsQuery,
-} from "./mugsModelApi";
+  TumblerModel,
+  useCreateTumblerOrderMutation,
+  useGetTumblerModelsQuery,
+} from "./thumblersModelApi";
 
-export default function CustomMugCreatorPro() {
-  const t = useTranslations("mug");
+export default function CustomTumblerCreatorPro() {
+  const t = useTranslations("");
 
-  const { data: mugModels = [], isLoading } = useGetMugModelsQuery();
-  const [createMugOrder] = useCreateMugOrderMutation();
+  const { data: tumblerModels = [], isLoading } = useGetTumblerModelsQuery();
+  const [createTumblerOrder] = useCreateTumblerOrderMutation();
 
   const [customText, setCustomText] = useState("");
   const [customerDescription, setCustomerDescription] = useState("");
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const [mugColor, setMugColor] = useState("white");
+  const [tumblerColor, setTumblerColor] = useState("white");
   const [quantity, setQuantity] = useState(1);
-  const [selectedModel, setSelectedModel] = useState<MugModel | null>(null);
+  const [selectedModel, setSelectedModel] = useState<TumblerModel | null>(null);
 
   const [showPayment, setShowPayment] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -48,25 +48,26 @@ export default function CustomMugCreatorPro() {
   // 📌 SAVE ORDER with FORM DATA
   const handleSave = async () => {
     if (!selectedModel) return alert(t("errors.selectModel"));
-    if (uploadedFiles.length === 0) return alert("Debes subir al menos 1 imagen");
+    if (uploadedFiles.length === 0)
+      return alert("Debes subir al menos 1 imagen");
 
     const unitPrice = selectedModel.price;
     const subtotal = unitPrice * quantity;
 
     const formData = new FormData();
 
-    formData.append("mugModelId", selectedModel.id);
-    formData.append("mugColor", mugColor);
+    formData.append("tumblerModelId", selectedModel.id);
+    formData.append("tumblerColor", tumblerColor);
     formData.append("customText", customText);
     formData.append("customerDescription", customerDescription);
     formData.append("quantity", String(quantity));
     formData.append("unitPrice", String(unitPrice));
     formData.append("subtotal", String(subtotal));
 
-    uploadedFiles.forEach((file) => formData.append("images", file)); // <--- IMPORTANTE: debe llamarse "images"
+    uploadedFiles.forEach((file) => formData.append("images", file));
 
     try {
-      const res = await createMugOrder(formData).unwrap();
+      const res = await createTumblerOrder(formData).unwrap();
 
       setClientSecret(res.clientSecret);
       setAmount(res.amount);
@@ -79,7 +80,7 @@ export default function CustomMugCreatorPro() {
       setPreviewImages([]);
       setQuantity(1);
     } catch (error) {
-      console.error("❌ Error creating order:", error);
+      console.error("❌ Error creating tumbler order:", error);
       alert("Error creando la orden");
     }
   };
@@ -87,27 +88,27 @@ export default function CustomMugCreatorPro() {
   return (
     <div className="w-full min-h-screen bg-black text-white py-10 px-4">
       <div className="max-w-2xl mx-auto">
-
         <h1 className="text-3xl font-extrabold text-center text-cyan-400 mb-4">
           {t("title")}
         </h1>
 
         <p className="text-center text-gray-300 mb-8">
           {t("subtitle")}{" "}
-          <span className="text-cyan-400 font-semibold">{t("qualityNote")}</span>
+          <span className="text-cyan-400 font-semibold">
+            {t("qualityNote")}
+          </span>
         </p>
 
         {isLoading ? (
           <p className="text-center text-cyan-300">{t("modelsLoading")}</p>
         ) : (
-          <MugModelShowcase
-            models={mugModels}
+          <TumblerModelShowcase
+            models={tumblerModels}
             onSelect={(m) => setSelectedModel(m)}
           />
         )}
 
         <div className="bg-black/40 border border-cyan-500/30 rounded-xl p-6 mt-8 shadow-lg">
-
           {/* Upload Button */}
           <label className="flex items-center justify-center w-full cursor-pointer bg-cyan-600 hover:bg-cyan-500 text-black font-semibold py-3 rounded-lg shadow-md transition mb-4">
             {t("uploadLabel")}
@@ -158,14 +159,14 @@ export default function CustomMugCreatorPro() {
             className="border border-cyan-400/20 bg-black/70 p-3 w-full h-24 rounded-lg text-white resize-none"
           />
 
-          {/* Mug Color */}
+          {/* Tumbler Color */}
           <label className="font-semibold text-cyan-400 mt-4">
             {t("colorLabel")}
           </label>
 
           <select
-            value={mugColor}
-            onChange={(e) => setMugColor(e.target.value)}
+            value={tumblerColor}
+            onChange={(e) => setTumblerColor(e.target.value)}
             className="border border-cyan-400/20 bg-black/70 p-3 w-full rounded-lg mt-2 text-white"
           >
             <option value="white">{t("colorWhite")}</option>

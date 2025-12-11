@@ -10,6 +10,8 @@ export default getRequestConfig(async () => {
       ...(await import(`../../messages/${locale}/validator.json`)).default,
       ...(await import(`../../messages/${locale}/login.json`)).default,
       ...(await import(`../../messages/${locale}/servicesSection.json`)).default,
+      ...(await import(`../../messages/${locale}/mug.json`)).default,
+      ...(await import(`../../messages/${locale}/tumbler.json`)).default,
    
   };
 

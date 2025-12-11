@@ -1,0 +1,39 @@
+{
+  "mug": {
+    "title": "Create Your Custom Mug",
+    "subtitle": "Upload your image and choose a model. Our team creates a professional design.",
+    "qualityNote": "Flocho Quality 🔥",
+
+    "modelsLoading": "Loading mug models...",
+
+    "uploadLabel": "Upload an image for your design",
+    "previewAlt": "Image preview",
+
+    "customTextLabel": "Custom Text (optional)",
+    "customTextPlaceholder": "Add your text here...",
+
+    "customerDescriptionLabel": "Describe what you want (optional)",
+    "customerDescriptionPlaceholder": "Explain the idea (max 250 characters)",
+
+    "colorLabel": "Color",
+    "colorWhite": "White",
+    "colorBlack": "Black",
+    "colorPink": "Pink",
+
+    "sizeLabel": "Size",
+    "size11": "11 oz",
+    "size15": "15 oz",
+
+    "sendButton": "Submit Design",
+
+    "errors": {
+      "selectModel": "You must select a mug model first.",
+      "uploadImage": "You must upload an image.",
+      "orderFailed": "There was an error submitting your design."
+    },
+
+    "success": {
+      "orderCreated": "Your design was successfully submitted! 🎉"
+    }
+  }
+}

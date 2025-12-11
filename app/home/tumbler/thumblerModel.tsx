@@ -1,46 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import { MugModel } from "./mugsModelApi";
+import { TumblerModel } from "./thumblersModelApi";
 
 interface Props {
   title?: string;
-  models: MugModel[];
-  onSelect: (model: MugModel) => void;
+  models: TumblerModel[];
+  onSelect: (model: TumblerModel) => void;
 }
 
-export default function MugModelShowcase({
-  title = "Modelos Disponibles",
+export default function TumblerModelShowcase({
+  title = "Modelos de Thumblers Disponibles",
   models,
   onSelect,
 }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
-  const imagenfirsPath = process.env.NEXT_PUBLIC_FLOCHO_API;
+  const apiBase = process.env.NEXT_PUBLIC_FLOCHO_API;
 
-  const handleSelect = (model: MugModel) => {
+  const handleSelect = (model: TumblerModel) => {
     setSelected(model.id);
     onSelect(model);
   };
+  console.log("TumblerModelShowcase models:", models);
 
   return (
     <section className="w-full py-8 px-4 bg-black text-white rounded-xl shadow-xl border border-cyan-500/30">
-      {/* TÍTULO */}
+      {/* TITLE */}
       <div className="text-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-wide text-cyan-400 drop-shadow-lg">
           {title}
         </h2>
         <p className="text-gray-300 mt-1 text-sm sm:text-base">
-          Elige el modelo perfecto para personalizar tu taza
+          Elige el modelo perfecto para personalizar tu tumbler
         </p>
       </div>
 
-      {/* CONTENEDOR SCROLL HORIZONTAL */}
+      {/* HORIZONTAL SCROLL LIST */}
       <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-cyan-500 scrollbar-track-black/30">
         {models.map((model) => {
           const imageUrl =
             model.images?.filePath
-              ? `${imagenfirsPath}${model.images.filePath}`
-              : "/placeholder-mug.png";
+              ? `${apiBase}${model.images.filePath}`
+              : "/placeholder-tumbler.png";
 
           return (
             <div
@@ -52,7 +53,7 @@ export default function MugModelShowcase({
                   : "border-cyan-500/20 bg-black/40 hover:border-cyan-400 hover:scale-105"
               }`}
             >
-              {/* IMAGEN */}
+              {/* IMAGE */}
               <div className="relative w-full h-44 sm:h-52 flex items-center justify-center bg-black">
                 <img
                   src={imageUrl}
@@ -61,14 +62,14 @@ export default function MugModelShowcase({
                 />
               </div>
 
-              {/* NOMBRE */}
+              {/* NAME */}
               <div className="py-3 bg-black/60 text-center">
                 <p className="font-bold tracking-wide text-cyan-300">
                   {model.name}
                 </p>
               </div>
 
-              {/* SELECCIONADO */}
+              {/* SELECTED TAG */}
               {selected === model.id && (
                 <div className="text-center py-2 bg-cyan-500/10 text-cyan-400 font-semibold tracking-wide text-sm">
                   ✓ Seleccionado

@@ -6,7 +6,7 @@ export const authApi = createApi({
   reducerPath: 'authApi',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/auth',
+    baseUrl: process.env.NEXT_PUBLIC_FLOCHO_API ,
   }),
 
   tagTypes: ['Auth'],
@@ -14,7 +14,7 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     registerUser: builder.mutation<RegisterResponse, RegisterRequest>({
       query: (body) => ({
-        url: '/register',
+        url: '/auth/register',
         method: 'POST',
         body,
       }),

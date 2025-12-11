@@ -1,0 +1,36 @@
+{
+  "title": "Customize Your Tumbler",
+  "subtitle": "Upload your design or describe how you want your tumbler.",
+  "qualityNote": "High-quality printing included.",
+  "modelsLoading": "Loading tumbler models...",
+  
+  "errors": {
+    "selectModel": "Please select a tumbler model first.",
+    "uploadAtLeastOne": "You must upload at least 1 image."
+  },
+
+  "uploadLabel": "Upload Images",
+  
+  "customTextLabel": "Custom Text",
+  "customTextPlaceholder": "Enter text you want printed on the tumbler",
+
+  "customerDescriptionLabel": "Design Instructions",
+  "customerDescriptionPlaceholder": "Describe the style or idea you want (max 250 characters)",
+
+  "colorLabel": "Tumbler Color",
+  "colorWhite": "White",
+  "colorBlack": "Black",
+  "colorPink": "Pink",
+
+  "quantityLabel": "Quantity",
+
+  "sendButton": "Submit Order",
+
+  "validator": {
+    "required": "This field is required",
+    "emailInvalid": "Invalid email address",
+    "phoneInvalid": "Invalid phone number",
+    "passwordWeak": "Must be at least 8 characters and include a number and an uppercase letter",
+    "nameInvalid": "Enter a valid name (letters only)"
+  }
+}
