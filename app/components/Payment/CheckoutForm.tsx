@@ -3,9 +3,8 @@
 
 import {
   PaymentElement,
-  PaymentRequestButtonElement,
   useElements,
-  useStripe,
+  useStripe
 } from "@stripe/react-stripe-js";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -104,9 +103,7 @@ export default function CheckoutForm({ amount }: CheckoutFormProps) {
             Total: ${formattedAmount}
           </h2>
 
-          {paymentRequest && (
-            <PaymentRequestButtonElement options={{ paymentRequest }} />
-          )}
+       
 
           <div style={{ marginTop: 20 }}>
            <PaymentElement
