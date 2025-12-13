@@ -4,72 +4,53 @@
 import {
   PaymentElement,
   useElements,
-  useStripe
+  useStripe,
 } from "@stripe/react-stripe-js";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import flochoLogo from "../assets/flochologo.svg"; // <-- IMPORTA TU LOGO
+import { useState } from "react";
+import flochoLogo from "../assets/flochologo.svg";
 
 interface CheckoutFormProps {
-  amount: number; // El monto viene en centavos desde Stripe backend
+  amount: number; // centavos (ej: 150 = $1.50)
 }
 
 export default function CheckoutForm({ amount }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [paymentRequest, setPaymentRequest] = useState<any>(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState<string>("");
   const [openSuccessModal, setOpenSuccessModal] = useState(false);
-
-  // controla si Stripe Payment Window debe mostrarse
   const [showPayment, setShowPayment] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  // convertir centavos → dólares: 5000 → 50.00
   const formattedAmount = (amount / 100).toFixed(2);
 
-  useEffect(() => {
-    if (!stripe) return;
-
-    const pr = stripe.paymentRequest({
-      country: "US",
-      currency: "usd",
-      total: {
-        label: "Flocho Payment",
-        amount,
-      },
-      requestPayerName: true,
-      requestPayerEmail: true,
-    });
-
-    pr.canMakePayment().then((result) => {
-      if (result) {
-        setPaymentRequest(pr);
-      }
-    });
-  }, [stripe, amount]);
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
+
+    setLoading(true);
+    setMessage("");
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       redirect: "if_required",
     });
 
+    setLoading(false);
+
     if (error) {
       setMessage(error.message || "Payment failed");
       return;
     }
 
-    if (paymentIntent && paymentIntent.status === "succeeded") {
+    if (paymentIntent?.status === "succeeded") {
       setOpenSuccessModal(true);
 
       setTimeout(() => {
         setOpenSuccessModal(false);
         setShowPayment(false);
-      }, 3500);
+      }, 3000);
     }
   };
 
@@ -77,74 +58,68 @@ export default function CheckoutForm({ amount }: CheckoutFormProps) {
     <>
       {showPayment && (
         <form onSubmit={handleSubmit} style={{ textAlign: "center" }}>
-          
-          {/* LOGO FLOCHO */}
+          {/* LOGO */}
           <div style={{ marginBottom: 20 }}>
             <Image
               src={flochoLogo}
               alt="Flocho Logo"
               width={80}
               height={80}
-              style={{
-                filter: "drop-shadow(0 0 5px #00ffff)",
-              }}
+              style={{ filter: "drop-shadow(0 0 5px #00ffff)" }}
             />
           </div>
 
-          {/* MONTO TOTAL A PAGAR */}
+          {/* TOTAL */}
           <h2
             style={{
               fontSize: 22,
               fontWeight: "bold",
-              marginBottom: 10,
+              marginBottom: 14,
               color: "#00ffff",
             }}
           >
             Total: ${formattedAmount}
           </h2>
 
-       
-
+          {/* STRIPE PAYMENT ELEMENT */}
           <div style={{ marginTop: 20 }}>
-           <PaymentElement
-                options={{
-                  layout: "tabs",
-                }}
-             />
+            <PaymentElement
+              options={{
+                layout: "tabs", // 👈 recomendado (limpio y moderno)
+              }}
+            />
           </div>
 
+          {/* PAY BUTTON */}
           <button
-            disabled={!stripe}
+            disabled={!stripe || loading}
             style={{
-              marginTop: 20,
+              marginTop: 24,
               padding: "12px 24px",
               background: "black",
               color: "white",
               borderRadius: 8,
               fontSize: 16,
-              cursor: "pointer",
+              cursor: loading ? "not-allowed" : "pointer",
               border: "2px solid #00ffff",
-              transition: "0.3s",
+              opacity: loading ? 0.6 : 1,
             }}
           >
-            Pay Now ${formattedAmount}
+            {loading ? "Processing..." : `Pay Now $${formattedAmount}`}
           </button>
 
           {message && (
-            <p style={{ color: "red", marginTop: 10 }}>{message}</p>
+            <p style={{ color: "red", marginTop: 12 }}>{message}</p>
           )}
         </form>
       )}
 
-      {/* ---------------- MODAL SUCCESS ---------------- */}
+      {/* SUCCESS MODAL */}
       {openSuccessModal && (
         <div
           style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
+            inset: 0,
             background: "rgba(0,0,0,0.6)",
             display: "flex",
             justifyContent: "center",
@@ -155,14 +130,12 @@ export default function CheckoutForm({ amount }: CheckoutFormProps) {
           <div
             style={{
               background: "white",
-              padding: "40px",
+              padding: 40,
               width: "90%",
-              maxWidth: "420px",
+              maxWidth: 420,
               borderRadius: 16,
               textAlign: "center",
-              color: "black",
               boxShadow: "0 8px 25px rgba(0,0,0,0.25)",
-              position: "relative",
             }}
           >
             <Image
@@ -209,6 +182,7 @@ export default function CheckoutForm({ amount }: CheckoutFormProps) {
 
             <p style={{ fontSize: 16, opacity: 0.8 }}>
               Thank you for your payment.  
+              <br />
               Your order is being processed 🔥
             </p>
           </div>
