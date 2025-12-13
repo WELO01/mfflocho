@@ -109,7 +109,11 @@ export default function CheckoutForm({ amount }: CheckoutFormProps) {
           )}
 
           <div style={{ marginTop: 20 }}>
-            <PaymentElement />
+           <PaymentElement
+                options={{
+                  layout: "tabs",
+                }}
+             />
           </div>
 
           <button
