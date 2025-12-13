@@ -24,35 +24,42 @@ export default function CheckoutForm({ amount }: CheckoutFormProps) {
   const [loading, setLoading] = useState(false);
 
   const formattedAmount = (amount / 100).toFixed(2);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!stripe || !elements) return;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!stripe || !elements) return;
+  setLoading(true);
+  setMessage("");
 
-    setLoading(true);
-    setMessage("");
+  const result = await stripe.confirmPayment({
+    elements,
+    confirmParams: {
+      return_url: `${window.location.origin}/payment/success`,
+    },
+    redirect: "if_required", // ✅ ESTE es el cambio clave para que exista paymentIntent en el tipo
+  });
 
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      redirect: "if_required",
-    });
+  setLoading(false);
 
-    setLoading(false);
+  if (result.error) {
+    setMessage(result.error.message ?? "Payment failed");
+    return;
+  }
 
-    if (error) {
-      setMessage(error.message || "Payment failed");
-      return;
-    }
+  // ✅ paymentIntent puede venir cuando no hubo redirect
+  if (result.paymentIntent?.status === "succeeded") {
+    setOpenSuccessModal(true);
+    setTimeout(() => {
+      setOpenSuccessModal(false);
+      setShowPayment(false);
+    }, 3000);
+  } else {
+    // En muchos métodos (wallets/3DS) puede haber redirect o status diferente.
+    // Tu confirmación real debe venir por webhook / return_url.
+  }
+};
 
-    if (paymentIntent?.status === "succeeded") {
-      setOpenSuccessModal(true);
 
-      setTimeout(() => {
-        setOpenSuccessModal(false);
-        setShowPayment(false);
-      }, 3000);
-    }
-  };
 
   return (
     <>
